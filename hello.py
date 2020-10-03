@@ -14,5 +14,11 @@ def hello_world():
 def new_page():
     return 'This is another page'
 
-# If you add this, you can run the flask 
-
+# If you add this, you can run the flask app as:
+# `python hello.py` in the terminal
+# This only works well if you have a one file app.
+# Not useful for multi file being ran as a package.
+if __name__ == '__main__':
+    app.run(debug=True) 
+# If debug=True it will restart the Flask app automatically 
+#    when you save the .py file.
