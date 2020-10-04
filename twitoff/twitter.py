@@ -37,7 +37,7 @@ def add_user_tweepy(username):
         db_user = (User.query.get(twitter_user.id) or
                    User(id=twitter_user.id,
                         username=username,
-                        followers=twitter_user.followers))
+                        followers=twitter_user.followers_count))
         DB.session.add(db_user)
 
         # Get tweets while ignoring re-tweets and replies:

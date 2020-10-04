@@ -7,7 +7,7 @@ DB = SQLAlchemy()  # Instantiate the SQLAlchemy database model
 class User(DB.Model):
     id = DB.Column(DB.BigInteger, primary_key=True)
     username = DB.Column(DB.String(80), unique=True, nullable=False)
-    followers = DB.Column(DB.String(120), unique=True, nullable=False)
+    followers = DB.Column(DB.Integer, unique=True, nullable=False)
     # Tweets Id's are ordinal ints, so we can fetch the most recent data:
     newest_tweet_id = DB.Column(DB.BigInteger, nullable=False)
 

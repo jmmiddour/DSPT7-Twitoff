@@ -30,7 +30,7 @@ def create_app():
                 add_user_tweepy(name)
                 message = f'User {name} has successfully been added to the Database!'
                 # This will pull the tweet atributes for the user just specified:
-                tweets = User.query.filter(User.username == name).one().tweet
+            tweets = User.query.filter(User.username == name).one().tweet
         
         except Exception as e:
             print(f'Error adding {name}: ERROR = {e}')
