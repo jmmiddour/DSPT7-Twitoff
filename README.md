@@ -8,7 +8,7 @@ A fun web application for comparing and predicting tweets authorship.
 
 #### Module 2:
 - I was able to add data to my database by pulling tweets and some user information from Twitter.
-- This was my first introduction to using `SQLAlchemy` and `SpaCy`.
+- This was my first introduction to using `Tweepy`, `SQLAlchemy` and `SpaCy`.
 - You can view my notes and work for this section in the `notes-and-work-done` directory. The markdown file name is `mod2_notes_and_work.md`.
 
 #### Module 3:
