@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from .db_model import DB, User, Tweet
-from .twitter import add_user_tweepy
+from .twitter import add_user_tweepy, add_user_history
+from .predict import predict_user
 
 # The code to run this app:
 # export FLASK_APP=twitoff:APP 
@@ -27,7 +28,7 @@ def create_app():
 
         try:
             if request.method == 'POST':
-                add_user_tweepy(name)
+                add_user_history(name)
                 message = f'User {name} has successfully been added to the Database!'
                 # This will pull the tweet atributes for the user just specified:
             tweets = User.query.filter(User.username == name).one().tweet
@@ -39,6 +40,35 @@ def create_app():
         return render_template('user.html', title=name, tweets=tweets,
                                message=message)
     
+    @app.route('/compare', methods=['POST'])
+    def compare(message=''):
+        user1 = request.values['user1']
+        user2 = request.values['user2']
+        tweet_text = request.values['tweet_text']
+
+        if user1 == user2:
+            message = "Can not compare a user to themselves."
+        else:
+            prediction = predict_user(user1, user2, tweet_text)
+
+            message = f"""
+                       The tweet: \n "{tweet_text}" \n 
+                       Is more likely to be said by 
+                       {user1 if prediction else user2} 
+                       than {user2 if prediction else user1}.
+                       """
+
+        return render_template('base.html', title='Prediction', 
+                                message=message, 
+                                users=User.query.all())
+
+    @app.route('/reset_my_DB')
+    def reset():
+        DB.drop_all()
+        DB.create_all()
+
+        return f'''The database has been reset.'''
+
     return app
 
     ## The following code was from module 1 and is no longer needed:

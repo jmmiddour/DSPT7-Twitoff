@@ -14,7 +14,7 @@
         <a href="/update" class="button warning">Update Tweets</a>
       </div>
     </nav>
-    <article class="flex two" style="padding: 3em 1em;">
+    <article class="flex two" style="padding: 3em 3em;">
       {% block content %}
       <div>
         <h1>{{ title }}</h1>
@@ -31,8 +31,12 @@
             {% endfor %}
           </select>
           <input type="text" name="tweet_text" placeholder="Tweet text to predict">
-          <input type="submit" value="Compare Users">
+          <input type="submit" value="Compare Users" target="_self">
         </form>
+        <div id="prediction">
+            <br><br>
+            <p>{{ message }}</p>
+        </div>
       </div>
       <div>
         <h2>Twitter Users</h2>
