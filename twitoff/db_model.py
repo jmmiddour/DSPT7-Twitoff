@@ -10,6 +10,8 @@ class User(DB.Model):
     followers = DB.Column(DB.Integer, unique=True, nullable=False)
     # Tweets Id's are ordinal ints, so we can fetch the most recent data:
     newest_tweet_id = DB.Column(DB.BigInteger, nullable=False)
+    # num_of_tweets = DB.Column(DB.Integer)
+
 
     def __repr__(self):
         return '<User %r>' % self.username

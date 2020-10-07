@@ -1,7 +1,70 @@
-{% extends "base.html" %}
-{% block content %}
-<div id="prediction">
-  <h2>{{ title }}</h2>
-  <p>{{ message }}</p>
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Twit-Off - {{ title }}
+    </title>
+    <link rel="stylesheet" href="https://unpkg.com/picnic"/>
+  </head>
+  <body style="background-color:rgb(233, 226, 235); color:rgb(73, 23, 102);">
+    <nav style="background-color: rgb(73, 23, 102); color:rgb(233, 226, 235);">
+      <a href="/" class="brand" style="font-size: larger;">
+        <span>Twit-Off! A Tweet Predictor</span></a>
+      <!-- responsive-->
+      <input id="bmenub" type="checkbox" class="show">
+      <label for="bmenub" class="burger pseudo button">Menu</label>
+      <div class="menu">
+        <a href="/update" class="button">Update Tweets</a>
+      </div>
+    </nav>
+    <article class="flex two" style="padding: 3em 1em;">
+      {% block content %}
+      <div>
+        <h1>{{ title }}</h1>
+        <p><b>Select 2 Users and Add a Tweet to Compare:</b></p>
+        <form action="/compare" method="post">
+          <select name="user1">
+            {% for user in users %}
+            <option value="{{ user.username }}">{{ user.username }}</option>
+            {% endfor %}
+          </select>
+          <select name="user2">
+            {% for user in users %}
+            <option value="{{ user.username }}">{{ user.username }}</option>
+            {% endfor %}
+          </select>
+          <input type="text" name="tweet_text" placeholder="Tweet text to predict">
+          <input type="submit" value="Compare Users" target="_self">
+        </form><br>
+        <div class="prediction">
+            <h2>User Prediction:</h2>
+              <p>
+                <b>The Tweet to Predict:</b><br>"{{ tweet_text }}"<br><br>
+                <b>Users chosen:</b><br>
+                <i>{{ user1 }}</i> -vs- <i>{{ user2 }}</i><br><br>
+                <b>The Results:</b><br>
+                {{ message }}
+              </p>
+        </div>
+      </div>
+      <div>
+        <center>
+          <h2>Twitter Users</h2>
+          <table>
+            {% for user in users %}
+              <tr>
+                <td rowspan="3"><a href="/user/{{ user.username }}">{{ user.username }}</a></td>
+              </tr>
+            {% endfor %}
+          </table>
+            <form action="/user" method="post">
+              <input type="text" name="user_name" placeholder="User to add">
+              <input type="submit" value="Add User">
+            </form>
+        </center>
+      </div>
+      {% endblock %}
+    </article>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/umbrellajs"/> -->
+  </body>
+</html>

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from .db_model import DB, User, Tweet
 from .twitter import add_user_tweepy, add_user_history
 from .predict import predict_user
+from prompt_toolkit import print_formatted_text
 
 # The code to run this app:
 # export FLASK_APP=twitoff:APP 
@@ -19,7 +20,7 @@ def create_app():
 
     @app.route('/')  # The website for the app.
     def root():  # This is the root directory/home page of the app.
-        return render_template('base.html', title='Home', users=User.query.all())
+        return render_template('base.html', title='Twit-Off Home', users=User.query.all())
 
     @app.route('/user', methods=['POST'])  # Adds data from a form to Database
     @app.route('/user/<name>', methods=['GET'])  # Displays data from Database
@@ -52,15 +53,14 @@ def create_app():
             prediction = predict_user(user1, user2, tweet_text)
 
             message = f"""
-                       The tweet: \n "{tweet_text}" \n 
-                       Is more likely to be said by 
-                       {user1 if prediction else user2} 
-                       than {user2 if prediction else user1}.
+                       @{user1 if prediction else user2} 
+                       is more likey to tweet this than 
+                       @{user2 if prediction else user1}.
                        """
 
-        return render_template('base.html', title='Prediction', 
-                                message=message, 
-                                users=User.query.all())
+        return render_template('predict.html', title='Twit-Off Prediction', 
+                                users=User.query.all(),
+                                **locals())
 
     @app.route('/reset_my_DB')
     def reset():

@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TwitOff - {{ title }}</title>
+    <title>
+      Twit-Off - {{ title }}
+    </title>
     <link rel="stylesheet" href="https://unpkg.com/picnic"/>
   </head>
-  <body>
-    <nav>
-      <a href="/" class="brand"><span>TwitOff!</span></a>
+  <body style="background-color:rgb(233, 226, 235); color:rgb(73, 23, 102);">
+    <nav style="background-color: rgb(73, 23, 102); color:rgb(233, 226, 235);">
+      <a href="/" class="brand" style="font-size: larger;">
+        <span>Twit-Off! A Tweet Predictor</span></a>
       <!-- responsive-->
       <input id="bmenub" type="checkbox" class="show">
       <label for="bmenub" class="burger pseudo button">Menu</label>
       <div class="menu">
-        <a href="/update" class="button warning">Update Tweets</a>
+        <a href="/update" class="button">Update Tweets</a>
       </div>
     </nav>
-    <article class="flex two" style="padding: 3em 3em;">
+    <article class="flex two" style="padding: 3em 1em;">
       {% block content %}
       <div>
         <h1>{{ title }}</h1>
-        <p>Select two users to compare:</p>
+        <p><b>Select 2 Users and Add a Tweet to Compare:</b></p>
         <form action="/compare" method="post">
           <select name="user1">
             {% for user in users %}
@@ -33,20 +36,22 @@
           <input type="text" name="tweet_text" placeholder="Tweet text to predict">
           <input type="submit" value="Compare Users" target="_self">
         </form>
-        <div id="prediction">
-            <br><br>
-            <p>{{ message }}</p>
-        </div>
       </div>
-      <div>
-        <h2>Twitter Users</h2>
-        {% for user in users %}
-        <a href="/user/{{ user.username }}"><span class="stack">{{ user.username }}</span></a>
-        {% endfor %}
-        <form action="/user" method="post">
-          <input type="text" name="user_name" placeholder="User to add">
-          <input type="submit" value="Add User">
-        </form>
+      <div id="centered" style="margin: 9 auto">
+        <center>
+          <h2>Twitter Users</h2>
+          <table>
+            {% for user in users %}
+              <tr>
+                <td rowspan="3"><a href="/user/{{ user.username }}">{{ user.username }}</a></td>
+              </tr>
+            {% endfor %}
+          </table>
+            <form action="/user" method="post">
+              <input type="text" name="user_name" placeholder="User to add">
+              <input type="submit" value="Add User">
+            </form>
+        </center>
       </div>
       {% endblock %}
     </article>
