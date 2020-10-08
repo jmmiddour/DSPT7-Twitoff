@@ -24,7 +24,7 @@ def create_app():
 
         try:
             if request.method == 'POST':
-                add_user_history(name)
+                add_user_tweepy(name)
                 message = f'User {name} has successfully been added to the Database!'
             # This will pull the tweet atributes for the user just specified:
             tweets = User.query.filter(User.username == name).one().tweet

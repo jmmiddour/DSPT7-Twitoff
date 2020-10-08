@@ -45,7 +45,8 @@ def add_user_tweepy(username):
                                        exclude_replies=True,
                                        include_rts=False,
                                        tweet_mode='extended',
-                                       since_id=db_user.newest_tweet_id)
+                                       since_id=db_user.newest_tweet_id) 
+        print(f'Total Tweets collected for {username}: {len(tweets)}')
         
         # Add newest_tweet_id to the User table:
         if tweets:
@@ -67,6 +68,7 @@ def add_user_tweepy(username):
         raise e
 
     else:
+        print('Successfully saved tweets to DB!')
         # If no errors occur then commit the records:
         DB.session.commit()
 
