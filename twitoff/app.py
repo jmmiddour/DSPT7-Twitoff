@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from .db_model import DB, User, Tweet
-from .twitter import add_user_tweepy, add_user_history
+from .twitter import add_user_tweepy, add_user_history, update_all_users
 from .predict import predict_user
 from prompt_toolkit import print_formatted_text
 
@@ -68,6 +68,12 @@ def create_app():
         DB.create_all()
 
         return f'''The database has been reset.'''
+
+    @app.route('/update')
+    def update():
+        update_all_users()
+        return render_template('base.html', title='All Tweets have been Updated!', 
+                                users=User.query.all())
 
     return app
 
