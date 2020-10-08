@@ -16,7 +16,7 @@ TWITTER = tweepy.API(TWITTER_AUTH)
 
 # Load SpaCy pre-trained med English Language model
 #   disabling the tagger and parser will help to speed up the process some.:
-nlp = spacy.load('en_core_web_md', disable=['tagger', 'parser'])
+nlp = spacy.load('../spacy_md_model')
 
 
 def vectorize_tweet(nlp, tweet_text):
