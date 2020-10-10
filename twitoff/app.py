@@ -15,7 +15,7 @@ def create_app():
 
     @app.route('/')  # The home page for the app.
     def root():  # This is the defining the root directory/home page of the app.
-        return render_template('base.html', title='Twit-Off Home', users=User.query.all())
+        return render_template('base.html', title='Welcome to TwitOff', users=User.query.all())
 
     @app.route('/user', methods=['POST'])  # Adds data from a form to Database
     @app.route('/user/<name>', methods=['GET'])  # Displays data from Database
@@ -33,7 +33,7 @@ def create_app():
             print(f'Error adding {name}: ERROR = {e}')
             tweets = []
         
-        return render_template('user.html', title=name, tweets=tweets,
+        return render_template('user.html', title=f'User: {name}', tweets=tweets,
                                message=message)
     
     @app.route('/compare', methods=['POST'])
@@ -53,7 +53,7 @@ def create_app():
                        @{user2 if prediction else user1}.
                        """
 
-        return render_template('predict.html', title='Twit-Off Prediction', 
+        return render_template('predict.html', title='Your Prediction', 
                                 users=User.query.all(), **locals())
 
     @app.route('/reset_my_DB')
@@ -68,7 +68,8 @@ def create_app():
     @app.route('/update')
     def update():
         update_all_users()
-        return render_template('base.html', title='All Tweets have been Updated!', 
+        return render_template('base.html', title='Updated Tweets', 
+                                message='All Tweets have been Updated!', 
                                 users=User.query.all())
 
     return app
